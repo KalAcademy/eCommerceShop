@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{8B23BD0A-FC38-4B06-A4EB-54E8283700D9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{49A88ECA-1B7B-40B2-9103-3E03051257A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CouponAPI", "CouponAPI\CouponAPI.csproj", "{0BE46DCC-A1FD-437F-BF6C-F4BD4D9D0D1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{0E8873B8-A465-4FCA-83A2-62795C6DD13A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BE46DCC-A1FD-437F-BF6C-F4BD4D9D0D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE46DCC-A1FD-437F-BF6C-F4BD4D9D0D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE46DCC-A1FD-437F-BF6C-F4BD4D9D0D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE46DCC-A1FD-437F-BF6C-F4BD4D9D0D1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E8873B8-A465-4FCA-83A2-62795C6DD13A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E8873B8-A465-4FCA-83A2-62795C6DD13A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E8873B8-A465-4FCA-83A2-62795C6DD13A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E8873B8-A465-4FCA-83A2-62795C6DD13A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0BE46DCC-A1FD-437F-BF6C-F4BD4D9D0D1F} = {8B23BD0A-FC38-4B06-A4EB-54E8283700D9}
+		{0E8873B8-A465-4FCA-83A2-62795C6DD13A} = {49A88ECA-1B7B-40B2-9103-3E03051257A9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F9C85CD-B601-4D04-A04E-9E3ED7F35B63}
+	EndGlobalSection
+EndGlobal
