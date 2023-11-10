@@ -37,8 +37,9 @@ namespace AuthAPI.Service
                 return new LoginResponseDto() { User = null, Token = "", Message = "Password is invalid" };
             }
 
+            var roles = await _userManager.GetRolesAsync(user);
             //User found, generate JWT token
-            var token = _jwtTokenGenerator.GenerateToken(user);
+            var token = _jwtTokenGenerator.GenerateToken(user, roles);
             UserDto userDto = new()
             {
                 Email = user.Email,
@@ -93,6 +94,22 @@ namespace AuthAPI.Service
                 //Log
             }
             return "Error encountered";
+        }
+
+        public async Task<bool> AssignRole(string email, string roleName)
+        {
+            var user = _db.ApplicationUsers.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
+            if (user != null)
+            {
+                if (!_roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+                {
+                    //Create role
+                    _roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+                }
+                await _userManager.AddToRoleAsync(user, roleName);
+                return true;
+            }
+            return false;
         }
     }
 }
