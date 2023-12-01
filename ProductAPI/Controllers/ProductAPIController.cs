@@ -1,26 +1,27 @@
 ﻿using AutoMapper;
-using CouponAPI.Data;
-using CouponAPI.Models;
-using CouponAPI.Models.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProductAPI.Data;
+using ProductAPI.Models;
+using ProductAPI.Models.Dto;
 
-namespace CouponAPI.Controllers
+namespace ProductAPI.Controllers
 {
-    [Route("api/coupon")]
+    [Route("api/product")]
     [ApiController]
     [Authorize]
-    public class CouponAPIController : ControllerBase
+    public class ProductAPIController : ControllerBase
     {
         private readonly AppDbContext _db;
         private ResponseDto _response;
         private IMapper _mapper;
-        public CouponAPIController(AppDbContext db, IMapper mapper) 
+
+        public ProductAPIController(AppDbContext db, IMapper mapper)
         {
             _db = db;
-            _response = new ResponseDto();
             _mapper = mapper;
+            _response = new ResponseDto();
         }
 
         [HttpGet]
@@ -28,10 +29,11 @@ namespace CouponAPI.Controllers
         {
             try
             {
-                IEnumerable<Coupon> couponsList = _db.Coupons.ToList();
-                _response.Result = _mapper.Map<IEnumerable<CouponDto>>(couponsList);
+                IEnumerable<Product> objList = _db.Products.ToList();
+                _response.Result = _mapper.Map<IEnumerable<ProductDto>>(objList);
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
                 _response.IsSuccess = false;
                 _response.Message = ex.Message;
             }
@@ -44,26 +46,8 @@ namespace CouponAPI.Controllers
         {
             try
             {
-                var coupon = _db.Coupons.FirstOrDefault(c => c.CouponId == id);
-                _response.Result = _mapper.Map<CouponDto>(coupon);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Message = ex.Message;
-            }
-            return _response;
-        }
-
-        [HttpGet]
-        [Route("GetByCode/{code}")]
-        public ResponseDto GetByCode(string code)
-        {
-            try
-            {
-                var coupon = _db.Coupons.FirstOrDefault(
-                    c => c.CouponCode.ToLower() == code.ToLower());
-                _response.Result = _mapper.Map<CouponDto>(coupon);
+                Product obj = _db.Products.First(u => u.ProductId == id);
+                _response.Result = _mapper.Map<ProductDto>(obj);
             }
             catch (Exception ex)
             {
@@ -74,15 +58,16 @@ namespace CouponAPI.Controllers
         }
 
         [HttpPost]
-        public ResponseDto Post([FromBody] CouponDto couponDto)
+        [Authorize(Roles = "ADMIN")]
+        public ResponseDto Post([FromBody] ProductDto ProductDto)
         {
             try
             {
-                Coupon obj = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Add(obj);
+                Product obj = _mapper.Map<Product>(ProductDto);
+                _db.Products.Add(obj);
                 _db.SaveChanges();
 
-                _response.Result = _mapper.Map<CouponDto>(obj);
+                _response.Result = _mapper.Map<ProductDto>(obj);
             }
             catch (Exception ex)
             {
@@ -94,15 +79,16 @@ namespace CouponAPI.Controllers
 
 
         [HttpPut]
-        public ResponseDto Put([FromBody] CouponDto couponDto)
+        [Authorize(Roles = "ADMIN")]
+        public ResponseDto Put([FromBody] ProductDto ProductDto)
         {
             try
             {
-                Coupon obj = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Update(obj);
+                Product obj = _mapper.Map<Product>(ProductDto);
+                _db.Products.Update(obj);
                 _db.SaveChanges();
 
-                _response.Result = _mapper.Map<CouponDto>(obj);
+                _response.Result = _mapper.Map<ProductDto>(obj);
             }
             catch (Exception ex)
             {
@@ -114,12 +100,13 @@ namespace CouponAPI.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(Roles = "ADMIN")]
         public ResponseDto Delete(int id)
         {
             try
             {
-                Coupon obj = _db.Coupons.First(u => u.CouponId == id);
-                _db.Coupons.Remove(obj);
+                Product obj = _db.Products.First(u => u.ProductId == id);
+                _db.Products.Remove(obj);
                 _db.SaveChanges();
             }
             catch (Exception ex)
@@ -129,6 +116,5 @@ namespace CouponAPI.Controllers
             }
             return _response;
         }
-
     }
 }
